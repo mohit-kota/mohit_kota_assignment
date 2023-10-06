@@ -8,7 +8,7 @@
 
     <style>
       .table-wrapper {
-        max-height: 300px; 
+        max-height: 300px;
         overflow-y: auto;
       }
     </style>
@@ -106,7 +106,7 @@
           '<button onclick="updateEntry(this)">Update</button> ' +
           '<button onclick="deleteEntry(this)">Delete</button>';
 
-        // Save the entry to local storage
+        // Save the entry to local storage if it doesn't exist already
         var entry = {
           firstName: firstName,
           lastName: lastName,
@@ -114,10 +114,22 @@
           phoneNumber: phoneNumber,
         };
         var entries = JSON.parse(localStorage.getItem("entries")) || [];
-        entries.push(entry);
-        localStorage.setItem("entries", JSON.stringify(entries));
-      }
 
+        // Check if the entry already exists in local storage
+        var isDuplicate = entries.some(function (existingEntry) {
+          return (
+            existingEntry.firstName === firstName &&
+            existingEntry.lastName === lastName &&
+            existingEntry.email === email &&
+            existingEntry.phoneNumber === phoneNumber
+          );
+        });
+
+        if (!isDuplicate) {
+          entries.push(entry);
+          localStorage.setItem("entries", JSON.stringify(entries));
+        }
+      }
       // Function to handle form submission
       document
         .getElementById("entry-form")
@@ -167,6 +179,14 @@
         localStorage.setItem("entries", JSON.stringify(entries));
       }
 
+      function clearTable() {
+        var table = document.getElementById("entries-table");
+        var rowCount = table.rows.length;
+        for (var i = rowCount - 1; i > 0; i--) {
+          table.deleteRow(i);
+        }
+      }
+
       // Function to delete an entry
       function deleteEntry(button) {
         var row = button.parentNode.parentNode;
@@ -204,6 +224,7 @@
       // Load entries from local storage on page load
       window.onload = function () {
         var entries = JSON.parse(localStorage.getItem("entries")) || [];
+        clearTable();
         for (var i = 0; i < entries.length; i++) {
           addEntry(
             entries[i].firstName,
