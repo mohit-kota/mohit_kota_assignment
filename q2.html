@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Drag and Drop Boxes</title>
+<style>
+  .big-box {
+    width: 250px;
+    height: 250px;
+    border: 1px solid black;
+    float: left;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    padding: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }
+
+  .small-box {
+    width: 30px;
+    height: 30px;
+    border: 1px solid black;
+    background-color: white;
+    cursor: pointer;
+    flex: 1 1 auto;
+    display: grid;
+    padding: 5px;
+    border: 1px solid black;
+    display: grid;
+    grid-template-columns: auto auto auto;
+  }
+
+  .big-box-1 {
+    background-color: #666;
+  }
+
+  .big-box-2 {
+    background-color: #666;
+  }
+
+  .dropped-box {
+    cursor: default;
+  }
+
+  .green-box {
+    background-color: green;
+  }
+
+  .yellow-box {
+    background-color: yellow;
+  }
+
+  #small-boxes {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    justify-content: center;
+  }
+
+  .tooltip {
+    position: absolute;
+    background-color: black;
+    color: white;
+    font-size: 12px;
+    padding: 5px;
+    border: 1px solid black;
+  }
+</style>
+</head>
+<body>
+<div style="display: flex; justify-content: space-around;">
+  <div class="big-box big-box-1">
+    <h2>Box 1</h2>
+  </div>
+
+  <div class="big-box big-box-2">
+    <h2>Box 2</h2>
+  </div>
+</div>
+
+<div id="small-boxes">
+</div>
+
+<script>
+  for (var i = 0; i < 20; i++) {
+    var smallBox = document.createElement("div");
+    smallBox.classList.add("small-box");
+    smallBox.id = "small-box-" + i;
+    document.getElementById("small-boxes").appendChild(smallBox);
+  }
+
+  // Add drag and drop functionality to small boxes
+  var smallBoxes = document.querySelectorAll(".small-box");
+  for (var i = 0; i < smallBoxes.length; i++) {
+    smallBoxes[i].draggable = true;
+
+    smallBoxes[i].addEventListener("dragstart", function(event) {
+      event.dataTransfer.setData("text/plain", this.id);
+    });
+
+    // Add a hover event listener for small boxes placed in big boxes
+    smallBoxes[i].addEventListener("mouseenter", function(event) {
+      var parentBigBox = this.closest(".big-box");
+      if (parentBigBox) {
+        var boxName = parentBigBox.querySelector("h2").textContent;
+        var boxColor = parentBigBox.classList.contains("big-box-1") ? "green" : "yellow";
+        alert("Box Name: " + boxName + "\nBox Color: " + boxColor);
+      }
+    });
+  }
+
+  // Add drop functionality to big boxes
+  var bigBoxes = document.querySelectorAll(".big-box");
+  for (var i = 0; i < bigBoxes.length; i++) {
+    bigBoxes[i].addEventListener("dragover", function(event) {
+      // Prevent the default drop behavior
+      event.preventDefault();
+    });
+    bigBoxes[i].addEventListener("drop", function(event) {
+      // Prevent the default drop behavior
+      event.preventDefault();
+
+      // Get the small box that is being dropped
+      var smallBoxId = event.dataTransfer.getData("text/plain");
+      var smallBox = document.getElementById(smallBoxId);
+
+      // Add the dropped box to the big box
+      this.appendChild(smallBox);
+
+      // Make the dropped box undraggable
+      smallBox.draggable = false;
+
+      // Change the color of the dropped box based on the big box it was dropped into
+      if (this.classList.contains("big-box-1")) {
+        smallBox.classList.add("green-box");
+      } else if (this.classList.contains("big-box-2")) {
+        smallBox.classList.add("yellow-box");
+      }
+    });
+  }
+
+</script>
+</body>
+</html>

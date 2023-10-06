@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Popup Form with Bootstrap</title>
+    <!-- Add Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      /* Styles for the button */
+      .open-popup-button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      /* Styles for the squares */
+      .squares-scroll-container {
+        max-width: 100%;
+        overflow-x: auto; /* Enable horizontal scrolling */
+      }
+      .horizontal {
+        overflow-x: scroll;
+        overflow-y: hidden;
+        white-space: nowrap;
+        .square {
+          display: inline-block;
+        }
+      }
+      .squares-container{
+      }
+
+      .square {
+        width: 50px;
+        height: 50px;
+        background-color: #ff5733;
+        margin: 5px;
+      }
+
+      .vertical {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .scrolling-wrapper {
+        overflow-x: scroll;
+        overflow-y: hidden;
+        white-space: nowrap;
+
+        .card {
+          display: inline-block;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Button to open the popup -->
+    <button
+      class="open-popup-button"
+      data-toggle="modal"
+      data-target="#popupModal"
+    >
+      Open Popup
+    </button>
+
+    <!-- Popup modal -->
+    <div
+      class="modal fade"
+      id="popupModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="popupModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="popupModalLabel">Popup Form</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- Popup content -->
+            <form id="optionsForm">
+              <div class="form-group">
+                <label for="numberOfSquares">Number of Squares:</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="numberOfSquares"
+                  name="numberOfSquares"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="sizeOfSquares">Size of Squares:</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="sizeOfSquares"
+                  name="sizeOfSquares"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="order">Order:</label>
+                <select class="form-control" id="order" name="order">
+                  <option value="horizontal">Horizontal</option>
+                  <option value="vertical">Vertical</option>
+                </select>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Function to create squares
+      function createSquares(numberOfSquares, sizeOfSquares, order) {
+        const squaresContainer = document.querySelector(".squares-container");
+        squaresContainer.innerHTML = ""; // Clear existing squares
+
+        if (order === "vertical") {
+          squaresContainer.classList.add("vertical");
+        } else {
+          squaresContainer.classList.remove("vertical");
+          squaresContainer.classList.add("horizontal");
+          // squaresContainer.style.flexDirection = "row";
+        }
+
+        for (let i = 0; i < numberOfSquares; i++) {
+          const square = document.createElement("div");
+          square.className = "square";
+          square.style.width = `${sizeOfSquares}px`;
+          square.style.height = `${sizeOfSquares}px`;
+          squaresContainer.appendChild(square);
+        }
+      }
+
+      // Event listener for the form submit
+      document
+        .getElementById("optionsForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          // Get the form values
+          const numberOfSquares = parseInt(
+            document.getElementById("numberOfSquares").value
+          );
+          const sizeOfSquares = parseInt(
+            document.getElementById("sizeOfSquares").value
+          );
+          const order = document.getElementById("order").value;
+
+          // Create and display the squares
+          createSquares(numberOfSquares, sizeOfSquares, order);
+
+          // Close the popup modal
+          $("#popupModal").modal("hide");
+        });
+    </script>
+
+    <!-- Squares container with horizontal scroll -->
+    <div class="squares-scroll-container">
+      <div class="squares-container"></div>
+    </div>
+
+    <!-- Add Bootstrap JS and jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

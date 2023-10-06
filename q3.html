@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <style>
+      /* font family is added */
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        width: 25vw;
+      }
+
+      h1,
+      p {
+        text-align: center;
+      }
+
+      /* desired spacing for input fields */
+      input {
+        margin: 0.25em 0em 1em 0em;
+      }
+      /* more styles added to beautify the input fields */
+      input {
+        margin: 0.25em 0em 1em 0em;
+        outline: none;
+        padding: 0.5em;
+        border: none;
+        background-color: rgb(225, 225, 225);
+        border-radius: 0.25em;
+        color: black;
+      }
+      /* styles for button */
+      button {
+        padding: 0.75em;
+        border: none;
+        outline: none;
+        background-color: rgb(68, 18, 232);
+        color: white;
+        border-radius: 0.25em;
+      }
+
+      /* hover functionality for button */
+      button:hover {
+        cursor: pointer;
+        background-color: rgb(41, 4, 164);
+      }
+    </style>
+    <title>Register</title>
+  </head>
+  <body>
+    <form id="emailForm">
+      <!-- class named "container" is assigned to div -->
+      <div class="container">
+        <h1>Register</h1>
+        <p>Kindly fill in this form to register.</p>
+        <label for="username"><b>Username</b></label>
+        <input
+          type="text"
+          placeholder="Enter username"
+          name="username"
+          id="username"
+          required
+        />
+
+        <label for="email"><b>Email</b></label>
+        <input
+          type="text"
+          placeholder="Enter Email"
+          name="email"
+          id="email"
+          required
+        />
+
+        <label for="pwd"><b>Password</b></label>
+        <input
+          type="password"
+          placeholder="Enter Password"
+          name="pwd"
+          id="pwd"
+          required
+        />
+
+        <label for="pwd-repeat"><b>Repeat Password</b></label>
+        <input
+          type="password"
+          placeholder="Repeat Password"
+          name="pwd-repeat"
+          id="pwd-repeat"
+          required
+        />
+
+        <button type="submit">Register</button>
+      </div>
+    </form>
+
+    <script>
+      emailjs.init("9vPGz6N3NMrpDfeHg"); // Replace with your Email.js user ID
+
+      document
+        .getElementById("emailForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const name = document.getElementById("username").value;
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("pwd").value;
+
+          // Send the email using Email.js
+          emailjs
+            .send("service_vie81in", "template_h3jzsc1", {
+              from_name: "MOHIT KOTA TASK",
+              to_name: name,
+              message:
+                "Your account has been registered with our registration service",
+              user_email: email,
+            })
+            .then(
+              function (response) {
+                console.log("Email sent:", response);
+                alert("Your account Registration is successfully registered and a respective email has been sent to your registered email id ");
+              },
+              function (error) {
+                console.error("Email sending failed:", error);
+                alert("Email sending failed. Please try again later.");
+              }
+            );
+
+          // Clear the form
+          document.getElementById("emailForm").reset();
+        });
+    </script>
+  </body>
+</html>

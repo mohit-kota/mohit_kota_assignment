@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+
+    <style>
+      .table-wrapper {
+        max-height: 300px; /* Adjust the height as needed */
+        overflow-y: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h2>Enter Details</h2>
+          <form id="entry-form">
+            <div class="form-group">
+              <label for="first-name">First Name:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="first-name"
+                name="first-name"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="last-name">Last Name:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="last-name"
+                name="last-name"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="phone-number">Phone Number:</label>
+              <input
+                type="tel"
+                class="form-control"
+                id="phone-number"
+                name="phone-number"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+
+        <div class="col-md-6">
+          <h2>Entries</h2>
+          <input type="text" id="search-input" placeholder="Search" />
+          <div class="table-wrapper">
+            <table class="table-striped table-bordered table-sm">
+              <thead>
+                <tr>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Email</th>
+                  <th>Phone Number</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="entries-table">
+                <!-- Table rows will be dynamically added here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Function to add an entry to the table
+      function addEntry(firstName, lastName, email, phoneNumber) {
+        var table = document.getElementById("entries-table");
+        var row = table.insertRow(-1);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
+        var cell5 = row.insertCell(4);
+
+        cell1.innerHTML = firstName;
+        cell2.innerHTML = lastName;
+        cell3.innerHTML = email;
+        cell4.innerHTML = phoneNumber;
+        cell5.innerHTML =
+          '<button onclick="editEntry(this)">Edit</button> ' +
+          '<button onclick="updateEntry(this)">Update</button> ' +
+          '<button onclick="deleteEntry(this)">Delete</button>';
+      }
+
+      // Function to handle form submission
+      document
+        .getElementById("entry-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          var firstName = document.getElementById("first-name").value;
+          var lastName = document.getElementById("last-name").value;
+          var email = document.getElementById("email").value;
+          var phoneNumber = document.getElementById("phone-number").value;
+          addEntry(firstName, lastName, email, phoneNumber);
+          // Clear the form fields after submission
+          document.getElementById("entry-form").reset();
+        });
+
+      // Function to edit an entry
+      function editEntry(button) {
+        var row = button.parentNode.parentNode;
+        var cells = row.getElementsByTagName("td");
+        for (var i = 0; i < cells.length - 1; i++) {
+          var input = document.createElement("input");
+          input.value = cells[i].innerText;
+          cells[i].innerHTML = "";
+          cells[i].appendChild(input);
+        }
+        // Disable the Edit button during editing
+        button.disabled = true;
+      }
+
+      // Function to update an entry
+      function updateEntry(button) {
+        var row = button.parentNode.parentNode;
+        var cells = row.getElementsByTagName("td");
+        for (var i = 0; i < cells.length - 1; i++) {
+          var input = cells[i].querySelector("input");
+          cells[i].innerHTML = input.value;
+        }
+        // Enable the Edit button after updating
+        row.querySelector("button[onclick='editEntry(this)']").disabled = false;
+      }
+
+      // Function to delete an entry
+      function deleteEntry(button) {
+        var row = button.parentNode.parentNode;
+        row.remove();
+      }
+
+      // Function to search for entries
+      document
+        .getElementById("search-input")
+        .addEventListener("input", function () {
+          var searchValue = this.value.toLowerCase();
+          var table = document.getElementById("entries-table");
+          var rows = table.getElementsByTagName("tr");
+          console.log(rows);
+          for (var i = 0; i < rows.length; i++) {
+            var cells = rows[i].getElementsByTagName("td");
+            var rowText = "";
+            for (var j = 0; j < cells.length - 1; j++) {
+              rowText += cells[j].innerText.toLowerCase() + " ";
+            }
+
+            if (rowText.includes(searchValue)) {
+              rows[i].style.display = "";
+            } else {
+              rows[i].style.display = "none";
+            }
+          }
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>
