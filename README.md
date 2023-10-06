@@ -1,7 +1,7 @@
 # mohit_kota_assignment
 Assignement containing all codes for 4 questions
 
-#Question - 1 
+# Question - 1 
 As discussed in the question 1 I have created a modal , when the button is clicked , it will open a popup which shows
 a modal which ask for required entries like no.of squares , size of each square , and the alignement of squares
 ![image](https://github.com/mohit-kota/mohit_kota_assignment/assets/96908137/8cfb3bd8-e689-4f82-ab58-1a358f2ada08)
@@ -9,7 +9,7 @@ a modal which ask for required entries like no.of squares , size of each square 
 ![image](https://github.com/mohit-kota/mohit_kota_assignment/assets/96908137/58bba91c-785a-4c54-8ce2-077638935c6a)
 ![image](https://github.com/mohit-kota/mohit_kota_assignment/assets/96908137/fbbc654f-8cef-4a3e-becd-a1b70d6d678d)
 
-#Question - 2
+# Question - 2
 As discussed in the question 2 I have created 2 Big Boxes , and a grid of 20 small boxes which can be dragged and 
 and dropped in either of 2 Big Boxes , following the specified conditions mentioned like
 1) when hover on the small
@@ -25,7 +25,7 @@ I am displaying BIG BOX name where the small box is present and respective color
 ![image](https://github.com/mohit-kota/mohit_kota_assignment/assets/96908137/6dc4d68d-4423-4597-bdc1-5c5f745f07d8)
 
 
-#Question - 3
+# Question - 3
 As discussed in the question 3 I have created a registration form where after successfully submitting i will be 
 sending a successfull registration mail to the respective mail id of user which he submitted during the registration
 I am using email.js to achieve this functionality without any need of server , I can be achieved using in alternative
@@ -35,7 +35,7 @@ html , css , javascript i am using email.js to send mail directly from client si
 ![image](https://github.com/mohit-kota/mohit_kota_assignment/assets/96908137/0de4fd4b-466b-4b97-a57d-eade4eca4116)
 ![image](https://github.com/mohit-kota/mohit_kota_assignment/assets/96908137/b722ee4e-dbf6-4376-a045-87da69b46840)
 
-#Question - 4
+# Question - 4
 As discussed in the question 4 I have created a form on left side and entries list of form on right side as discussed
 in the question 4 maintaining proper alignment .
 I have created add , edit , update , delete , search functionality 
