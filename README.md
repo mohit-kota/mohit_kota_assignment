@@ -44,8 +44,8 @@ when edit is clicked i can manipulate data inplace in the entries table and make
 when delete is clicked i will delete data from the entries table 
 Added scroll for the table if number of record increases
 The input box below Entries Heading is respectively a search bar , when we try searching the records in the table it 
-automatically filters the results based on input in searchbar . The above code is achived directly with dom manipulations
-which can also be achieved using backend server and also with localstorage
+automatically filters the results based on input in searchbar . The above code is achived using localstorage
+which can also be achieved using backend server .
 ![image](https://github.com/mohit-kota/mohit_kota_assignment/assets/96908137/4d8b3e57-fa00-44c4-8768-d285bd180cbf)
 ![image](https://github.com/mohit-kota/mohit_kota_assignment/assets/96908137/bee695ef-f67c-40a6-9a73-023f078523aa)
 ![image](https://github.com/mohit-kota/mohit_kota_assignment/assets/96908137/7ceb7d73-82cb-407d-85b9-2a74bfa34df8)
