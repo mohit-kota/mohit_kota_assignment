@@ -87,7 +87,7 @@
     </div>
 
     <script>
-      // Function to add an entry to the table
+      // Function to add an entry to the table and local storage
       function addEntry(firstName, lastName, email, phoneNumber) {
         var table = document.getElementById("entries-table");
         var row = table.insertRow(-1);
@@ -105,6 +105,17 @@
           '<button onclick="editEntry(this)">Edit</button> ' +
           '<button onclick="updateEntry(this)">Update</button> ' +
           '<button onclick="deleteEntry(this)">Delete</button>';
+
+        // Save the entry to local storage
+        var entry = {
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          phoneNumber: phoneNumber,
+        };
+        var entries = JSON.parse(localStorage.getItem("entries")) || [];
+        entries.push(entry);
+        localStorage.setItem("entries", JSON.stringify(entries));
       }
 
       // Function to handle form submission
@@ -145,12 +156,27 @@
         }
         // Enable the Edit button after updating
         row.querySelector("button[onclick='editEntry(this)']").disabled = false;
+
+        // Update the entry in local storage
+        var entries = JSON.parse(localStorage.getItem("entries")) || [];
+        var rowIndex = row.rowIndex - 1;
+        entries[rowIndex].firstName = cells[0].innerText;
+        entries[rowIndex].lastName = cells[1].innerText;
+        entries[rowIndex].email = cells[2].innerText;
+        entries[rowIndex].phoneNumber = cells[3].innerText;
+        localStorage.setItem("entries", JSON.stringify(entries));
       }
 
       // Function to delete an entry
       function deleteEntry(button) {
         var row = button.parentNode.parentNode;
         row.remove();
+
+        // Delete the entry from local storage
+        var entries = JSON.parse(localStorage.getItem("entries")) || [];
+        var rowIndex = row.rowIndex - 1;
+        entries.splice(rowIndex, 1);
+        localStorage.setItem("entries", JSON.stringify(entries));
       }
 
       // Function to search for entries
@@ -160,7 +186,6 @@
           var searchValue = this.value.toLowerCase();
           var table = document.getElementById("entries-table");
           var rows = table.getElementsByTagName("tr");
-          console.log(rows);
           for (var i = 0; i < rows.length; i++) {
             var cells = rows[i].getElementsByTagName("td");
             var rowText = "";
@@ -175,6 +200,19 @@
             }
           }
         });
+
+      // Load entries from local storage on page load
+      window.onload = function () {
+        var entries = JSON.parse(localStorage.getItem("entries")) || [];
+        for (var i = 0; i < entries.length; i++) {
+          addEntry(
+            entries[i].firstName,
+            entries[i].lastName,
+            entries[i].email,
+            entries[i].phoneNumber
+          );
+        }
+      };
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
