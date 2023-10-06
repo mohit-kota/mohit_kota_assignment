@@ -42,7 +42,7 @@ I have created add , edit , update , delete , search functionality
 when i fill the form and click submit , it triggers add functionality and adds a new record in the entries table 
 when edit is clicked i can manipulate data inplace in the entries table and make it updated by clicking update 
 when delete is clicked i will delete data from the entries table 
-
+Added scroll for the table if number of record increases
 The input box below Entries Heading is respectively a search bar , when we try searching the records in the table it 
 automatically filters the results based on input in searchbar . The above code is achived directly with dom manipulations
 which can also be achieved using backend server and also with localstorage
